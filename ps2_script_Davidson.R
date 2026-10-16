@@ -137,3 +137,57 @@ unemp_top_decreases_no_covid <- unemp |>
   )
 
 unemp_top_decreases_no_covid
+
+#----------5.1----------
+ggplot(unemp, aes(x = date, y = unemployment_rate, color = region)) +
+  geom_line() +
+  labs(
+    title = "Unemployment Rates by Region (1976-2026)",
+    x = "Year",
+    y = "Unemployment Rate (%)",
+    color = "Region"
+  ) +
+  theme_minimal()
+
+#----------5.2----------
+ggplot(unemp, aes(x = date, y = unemployment_rate, color = region)) +
+  geom_line() +
+  facet_wrap(~ region) +
+  labs(
+    title = "Unemployment Rates by Region (1976-2026)",
+    x = "Year",
+    y = "Unemployment Rate (%)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+#----------5.3----------
+ggplot(unemp_summary, aes(x = fct_reorder(region, mean_rate), y = mean_rate)) +
+  geom_col(fill = "blue") +
+  labs(
+    title = "Average Unemployment Rate by Region (1976-2026)",
+    x = "Region",
+    y = "Average Unemployment Rate (%)"
+  ) +
+  theme_minimal()
+
+#----------5.4----------
+ggplot(
+  unemp |> filter(date >= as.Date("2019-01-01"),
+                  date <= as.Date("2021-12-01")),
+  aes(x = date, y = unemployment_rate_change, fill = region)
+) +
+  geom_col() +
+  facet_wrap(~ region) +
+  labs(
+    title = "Monthly Unemployment Rate Changes (2019-2021)",
+    x = "Year",
+    y = "Monthly Change (Percentage Points)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+#I chose to graph monthly changes in unemployment rates from 2019 to 2021 because 
+#I wanted to see how COVID affected different regions. The graph shows the big 
+#increases in unemployment during the beginning of the pandemic, then decreases 
+#as the economy began recovering.
